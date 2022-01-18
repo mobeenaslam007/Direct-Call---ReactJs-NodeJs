@@ -1,0 +1,14 @@
+body {
+    background:
+        linear-gradient(rgba(0, 0, 0, 0.3),
+            rgba(0, 0, 0, 0.3)),
+        url(https://i.pinimg.com/originals/4a/ab/11/4aab11f13d33f0496ca7c6d3c8697680.jpg);
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+}
+
+* {
+    margin: 0;
+    padding: 0;
+}
