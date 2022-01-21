@@ -6,6 +6,8 @@ const io = require("socket.io")(server, {
   cors: {
     origin: "*",
     methods: ["GET", "POST"],
+    allowHeaders: ["*"],
+    credentials:true
   },
 });
 
