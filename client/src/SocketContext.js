@@ -5,14 +5,20 @@ import Peer from "simple-peer";
 console.log("---------", io);
 
 const SocketContext = createContext();
+// let phoneNumber = null;
+// while (phoneNumber === null) phoneNumber = prompt("Enter your phone number");
+const phoneNumber = "03453626915";
 
-// const phoneNumber = prompt("Enter your phone number");
-const phoneNumber = "03453626917"
+const socket = io("https://wgroup-direct-call.herokuapp.com/", {
+    query: `CustomId=${phoneNumber}`,
+  });
 
-// const socket = io('https://wgroup-direct-call.herokuapp.com/', { query: `CustomId=${phoneNumber}`} );
-const socket = io("http://localhost:7000", {
-  query: `CustomId=${phoneNumber}`,
-});
+// const socket = io("https://call.watchblock.net", {
+//   query: `CustomId=${phoneNumber}`,
+// });
+// const socket = io("http://localhost:7000", {
+//   query: `CustomId=${phoneNumber}`,
+// });
 
 const ContextProvider = ({ children }) => {
   const [callAccepted, setCallAccepted] = useState(false);
@@ -42,8 +48,11 @@ const ContextProvider = ({ children }) => {
     // setMe("03453626917")
 
     socket.on("callUser", ({ from, name: callerName, signal }) => {
+      // console.log({ from, name: callerName, signal })
+      // debugger;
       setCall({ isReceivingCall: true, from, name: callerName, signal });
     });
+
   }, []);
 
   const answerCall = () => {
@@ -66,7 +75,6 @@ const ContextProvider = ({ children }) => {
 
   const callUser = (id) => {
     const peer = new Peer({ initiator: true, trickle: false, stream });
-
     peer.on("signal", (data) => {
       socket.emit("callUser", {
         userToCall: id,
@@ -85,6 +93,14 @@ const ContextProvider = ({ children }) => {
 
       peer.signal(signal);
     });
+
+    // socket.on("callEnded", () => {
+    // setCallEnded(true);
+    // connectionRef.current.destroy();
+
+    // window.location.reload();
+      
+    // });
 
     connectionRef.current = peer;
   };

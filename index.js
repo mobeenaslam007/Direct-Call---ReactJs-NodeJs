@@ -41,7 +41,9 @@ io.on("connection", (socket) => {
   });
 
   socket.on("callUser", ({ userToCall, signalData, from, name }) => {
+    console.log("Call user : ",{ userToCall } )
     io.to(userToCall).emit("callUser", { signal: signalData, from, name });
+    console.log("Response sent")
   });
 
   socket.on("answerCall", (data) => {
